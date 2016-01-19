@@ -141,6 +141,7 @@ class ViewController: UIViewController {
     //结束计时
     func stopTimer(){
         start_flag = false;
+        do_flag = false;
         btn.setTitle("start", forState: .Normal);
         currSec.text="00";
         timer.invalidate(); //销毁计时器
