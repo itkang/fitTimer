@@ -29,9 +29,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var runSec: UILabel!
     
     //播放声音
-    private var timePlayer:AVAudioPlayer!
-    private var goPlayer:AVAudioPlayer!
-    private var recoverPlayer:AVAudioPlayer!
+    var timePlayer:AVAudioPlayer!
+    var goPlayer:AVAudioPlayer!
+    var recoverPlayer:AVAudioPlayer!
     
     //全局变量
     var start_flag = false; //起始标记
@@ -48,6 +48,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let session = AVAudioSession.sharedInstance()
+        try! session.setCategory(AVAudioSessionCategoryPlayback)
+        try! session.setActive(true)
         initView();
         //播放time音乐
         let url = NSBundle.mainBundle().URLForResource("54321", withExtension: "mp3");
