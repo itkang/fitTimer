@@ -29,7 +29,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var runSec: UILabel!
     
     //播放声音
-    private var audioPlayer:AVAudioPlayer!
+    private var timePlayer:AVAudioPlayer!
+    private var goPlayer:AVAudioPlayer!
+    private var recoverPlayer:AVAudioPlayer!
     
     //全局变量
     var start_flag = false; //起始标记
@@ -47,18 +49,43 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initView();
-        //播放音乐
-        let url = NSBundle.mainBundle().URLForResource("5sec", withExtension: "wav");
+        //播放time音乐
+        let url = NSBundle.mainBundle().URLForResource("54321", withExtension: "mp3");
         if let u = url {
             do {
-                audioPlayer = try AVAudioPlayer(contentsOfURL: u)
-                if self.audioPlayer == nil {
+                timePlayer = try AVAudioPlayer(contentsOfURL: u)
+                if self.timePlayer == nil {
                     print("error");
                 }
             } catch {
                 print("error");
             }
         }
+        //go music
+        let gourl = NSBundle.mainBundle().URLForResource("go", withExtension: "mp3");
+        if let gu = gourl {
+            do {
+                goPlayer = try AVAudioPlayer(contentsOfURL: gu)
+                if self.goPlayer == nil {
+                    print("error");
+                }
+            } catch {
+                print("error");
+            }
+        }
+        //recover music
+        let recoverurl = NSBundle.mainBundle().URLForResource("recover", withExtension: "mp3");
+        if let ru = recoverurl {
+            do {
+                recoverPlayer = try AVAudioPlayer(contentsOfURL: ru)
+                if self.recoverPlayer == nil {
+                    print("error");
+                }
+            } catch {
+                print("error");
+            }
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -128,6 +155,7 @@ class ViewController: UIViewController {
             if (!do_flag) {
                 do_flag = !do_flag;
                 _showsec = _dotime;
+                goPlayer.play();
             }
         } else {
             currStu.text="Recover time";
@@ -135,11 +163,12 @@ class ViewController: UIViewController {
             if (do_flag) {
                 do_flag = !do_flag;
                 _showsec = _resettime;
+                recoverPlayer.play();
             }
         }
         //倒计时音效
         if (_showsec == 5){
-            audioPlayer.play();
+            timePlayer.play();
         }
         currSec.text="\(_showsec--)";
         
